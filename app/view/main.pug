@@ -1,10 +1,10 @@
 extend base/layout.pug
 
 block content
-  #chat.chat
+  .chat
     .chat__messages
-      ul.chat__messages-list
+      ul#list.chat__messages-list
         li.chat__messages-item
-    form(method="post").chat__messages-form
+    form(method="post")#form.chat__messages-form
       textarea(placeholder="Write a message\nAnd, please, be cool!")
       button#send(type="submit")

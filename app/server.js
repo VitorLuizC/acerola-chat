@@ -1,4 +1,4 @@
-const path = require('path');
+const { join } = require('path');
 const http = require('http');
 const express = require('express');
 const socket = require('socket.io');
@@ -8,12 +8,12 @@ const app = express();
 const server = http.createServer(app);
 const io = socket(server);
 
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, './view'));
-app.use('/resource', express.static(path.join(__dirname, './resource')));
-app.get('/', (req, res) => res.render('main', config.view));
+app
+  .set('view engine', 'pug')
+  .set('views', join(__dirname, './view'))
+  .use('/resource', express.static(join(__dirname, './resource')))
+  .get('/', (req, res) => res.render('main', config.view));
 
-// Socket
 io.on('connection', (user) => console.log('User was connected!'));
 
 server.listen(config.server.port, config.server.log);
