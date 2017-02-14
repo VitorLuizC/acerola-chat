@@ -2,3 +2,20 @@ html,
 body {
   height: 100%;
 }
+html {
+  font-size: 62.5%;
+}
+body,
+textarea {
+  font-size: 1.6rem;
+  font-family: sans-serif;
+}
+body,
+ul,
+h1 {
+  margin: 0;
+}
+.container {
+  background-color: #fc4112;
+  background-image: linear-gradient(transparent, #fe743d);
+}

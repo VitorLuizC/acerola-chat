@@ -6,11 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node .",
-    "build:script:webpack": "webpack ./app/client.js ./app/resource/main.js",
-    "build:script:babel": "babel ./app/resource/main.js --presets es2015 -o ./app/resource/main.js",
+    "build:script:webpack": "webpack ./app/client.js ./app/resource/main.es6.js",
+    "build:script:babel": "babel ./app/resource/main.es6.js --presets es2015 -o ./app/resource/main.js",
     "build:stylus": "stylus ./app/style/index.styl -o ./app/resource/style.css",
     "build:script": "npm run build:script:webpack && npm run build:script:babel",
-    "build": "npm run build:stylus && npm run build:script"
+    "build": "npm run build:stylus && npm run build:script",
+    "watch:stylus": "stylus ./app/style/index.styl -o ./app/resource/style.css -w"
   },
   "repository": {
     "type": "git",
