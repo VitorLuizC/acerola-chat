@@ -12,6 +12,7 @@
     "url": "git+https://github.com/VitorLuizC/chat.git"
   },
   "keywords": [
+    "heroku",
     "chat"
   ],
   "author": "Vitor Luiz Cavalcanti <vitorluizc@outlook.com>",
