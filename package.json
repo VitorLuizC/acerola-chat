@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node .",
     "move": "copy .\\app\\chat\\index.js .\\app\\resource\\main.js",
-    "build": "stylus ./app/style/index.styl -o ./app/resource/style.css"
+    "build": "stylus ./app/style/index.styl -o ./app/resource/style.css",
+    "watch": "stylus ./app/style/index.styl -o ./app/resource/style.css -w"
   },
   "repository": {
     "type": "git",
