@@ -10,7 +10,10 @@ const io = socket(server);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, './view'));
-
+app.set('/resource', express.static('./resource'));
 app.get('/', (req, res) => res.render('main'));
+
+// Socket
+io.on('connection', (user) => console.log('User was connected!'));
 
 server.listen(config.port, config.log);

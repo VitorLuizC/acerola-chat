@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node .",
+    "move": "copy .\\app\\chat\\index.js .\\app\\resource\\main.js",
     "build": "stylus ./app/style/index.styl -o ./app/resource/style.css"
   },
   "repository": {

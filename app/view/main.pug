@@ -1,8 +1,10 @@
-h1 Chat
-#Chat
+extend base/layout.pug
+
+block content
+  #chat.chat
     .chat__messages
-        ul.chat__messages-list
-            li.chat__messages-item
-    form.chat__messages-form
-        textarea
-        button(type="submit")
+      ul.chat__messages-list
+        li.chat__messages-item
+    form(method="post").chat__messages-form
+      textarea(placeholder="Write a message\nAnd, please, be cool!")
+      button#send(type="submit")

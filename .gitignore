@@ -1,5 +1,6 @@
 # Log files
 debug.Log
+npm-debug.log
 
 # Node.js modules
 node_modules
