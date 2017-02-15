@@ -77,7 +77,7 @@
   /******/__webpack_require__.p = "";
 
   /******/ // Load entry module and return exports
-  /******/return __webpack_require__(__webpack_require__.s = 1);
+  /******/return __webpack_require__(__webpack_require__.s = 2);
   /******/
 })(
 /************************************************************************/
@@ -91,9 +91,6 @@
     return getElement;
   });
   /* unused harmony export getElements */
-  /* harmony export (binding) */__webpack_require__.d(__webpack_exports__, "b", function () {
-    return dismissDefault;
-  });
   /**
    * Get an element by CSS selector.
    * @param {string} selector
@@ -122,51 +119,26 @@
     return Array.from(elements);
   }
 
-  /**
-   * Returns a nice event handler.
-   * @param {Function} callback
-   */
-  function dismissDefault(callback) {
-    /**
-     * Event handler. Could dismiss default action.
-     * @param {Event} event
-     */
-    function handler(event) {
-      var value = callback.apply(this, event);
-      event.preventDefault();
-      event.stopPropagation();
-      return value;
-    }
-
-    return handler;
-  }
-
   /***/
 },
 /* 1 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
   "use strict";
-
-  Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-  /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_html_js__ = __webpack_require__(0);
+  /* harmony import */
+  var __WEBPACK_IMPORTED_MODULE_0__html_js__ = __webpack_require__(0);
 
   /**
-   * Global socket client instance.
+   * Messages list.
+   * @type {HTMLUListElement}
    */
-  var socket = io();
+  var list = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__html_js__["a" /* getElement */])('#list');
 
-  var list = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#list');
-  var send = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#send');
-  var text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#text');
-
-  send.addEventListener('click', __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["b" /* dismissDefault */])(function () {
-    socket.emit('send', createMessage());
-  }));
-
-  socket.on('receive', function (message) {
-    list.appendChild(createItem(message));
-  });
+  /**
+   * Message field.
+   * @type {HTMLTextAreaElement}
+   */
+  var field = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__html_js__["a" /* getElement */])('#field');
 
   /**
    * @typedef Message
@@ -176,28 +148,94 @@
    */
 
   /**
+   * Get message.
    * @returns {Message}
    */
-  function createMessage() {
+  function getMessage() {
     var date = new Date();
 
+    /**
+     * Put a zero if number lower than 10. Ex. 09, 02.
+     * @param {number} num
+     * @returns {string}
+     */
+    var zeroPad = function zeroPad(num) {
+      return num <= 9 ? '0' + num.toString() : num.toString();
+    };
+
     return {
-      text: text.value,
-      time: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+      text: field.value,
+      time: zeroPad(date.getHours()) + ':' + zeroPad(date.getMinutes())
     };
   }
 
   /**
+   * Render a message.
    * @param {Message} message
-   * @returns {HTMLLIElement}
    */
-  function createItem(message) {
+  function renderMessage(message) {
     var item = document.createElement('li');
 
     item.innerHTML = '\n    <p>' + message.text + '</p>\n    <small>' + message.time + '</small>\n  ';
 
-    return item;
+    list.appendChild(item);
   }
+
+  /* harmony default export */__webpack_exports__["a"] = { getMessage: getMessage, renderMessage: renderMessage };
+
+  /***/
+},
+/* 2 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+  "use strict";
+
+  Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+  /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_html_js__ = __webpack_require__(0);
+  /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__lib_chat_js__ = __webpack_require__(1);
+
+  /** Global socket client instance. */
+  var socket = io();
+
+  /**
+   * Message form.
+   * @type {HTMLFormElement}
+   */
+  var form = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#form');
+
+  form.addEventListener('submit', sendHandler);
+
+  socket.on('chat message', receiveHandler);
+
+  /**
+   * @typedef Message
+   * @type {Object}
+   * @property {string} text
+   * @property {string} time
+   */
+
+  /**
+   * On receive message callback.
+   * @param {Message} message
+   */
+  function receiveHandler(message) {
+    __WEBPACK_IMPORTED_MODULE_1__lib_chat_js__["a" /* default */].renderMessage(message);
+  }
+
+  /**
+   * On send message callback.
+   * @param {Event} event
+   * @returns {false}
+   */
+  function sendHandler(event) {
+    event.preventDefault();
+
+    var message = __WEBPACK_IMPORTED_MODULE_1__lib_chat_js__["a" /* default */].getMessage();
+    var isValidMessage = message.text.trim() !== '';
+
+    if (isValidMessage) socket.emit('chat message', message);
+    return false;
+  };
 
   /***/
 }]);

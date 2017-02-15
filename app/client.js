@@ -1,21 +1,18 @@
 import { getElement, dismissDefault } from './lib/html.js';
+import chat from './lib/chat.js';
 
-/**
- * Global socket client instance.
- */
+/** Global socket client instance. */
 const socket = io();
 
-const list = getElement('#list');
-const send = getElement('#send');
-const text = getElement('#text');
+/**
+ * Message form.
+ * @type {HTMLFormElement}
+ */
+const form = getElement('#form');
 
-send.addEventListener('click', dismissDefault(() => {
-  socket.emit('send', createMessage());
-}));
+form.addEventListener('submit', sendHandler);
 
-socket.on('receive', message => {
-  list.appendChild(createItem(message));
-});
+socket.on('chat message', receiveHandler);
 
 /**
  * @typedef Message
@@ -25,28 +22,25 @@ socket.on('receive', message => {
  */
 
 /**
- * @returns {Message}
+ * On receive message callback.
+ * @param {Message} message
  */
-function createMessage() {
-  let date = new Date();
-
-  return {
-    text: text.value,
-    time: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-  };
+function receiveHandler(message) {
+  chat.renderMessage(message);
 }
 
 /**
- * @param {Message} message
- * @returns {HTMLLIElement}
+ * On send message callback.
+ * @param {Event} event
+ * @returns {false}
  */
-function createItem(message) {
-  let item = document.createElement('li');
+function sendHandler(event) {
+  event.preventDefault();
 
-  item.innerHTML = `
-    <p>${message.text}</p>
-    <small>${message.time}</small>
-  `;
+  let message = chat.getMessage();
+  let isValidMessage = message.text.trim() !== '';
 
-  return item;
-}
+  if (isValidMessage)
+    socket.emit('chat message', message);
+  return false;
+};

@@ -24,23 +24,4 @@ function getElements(selectors, parent = document) {
   return Array.from(elements);
 }
 
-/**
- * Returns a nice event handler.
- * @param {Function} callback
- */
-function dismissDefault(callback) {
-  /**
-   * Event handler. Could dismiss default action.
-   * @param {Event} event
-   */
-  function handler(event) {
-    let value = callback.apply(this, event);
-    event.preventDefault();
-    event.stopPropagation();
-    return value;
-  }
-
-  return handler;
-}
-
-export { getElement, getElements, dismissDefault };
+export { getElement, getElements };

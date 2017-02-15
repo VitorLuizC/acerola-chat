@@ -14,6 +14,8 @@ app
   .use('/resource', express.static(join(__dirname, './resource')))
   .get('/', (req, res) => res.render('main', config.view));
 
-io.on('send', message => console.log(message)) //socket('receive', message));
+io.on('connection', socket => {
+  socket.on('chat message', message => io.emit('chat message', message))
+});
 
 server.listen(config.server.port, config.server.log);
