@@ -153,7 +153,9 @@
    */
   function getMessage() {
     var date = new Date();
+    var text = field.value;
 
+    field.value = '';
     /**
      * Put a zero if number lower than 10. Ex. 09, 02.
      * @param {number} num
@@ -164,7 +166,7 @@
     };
 
     return {
-      text: field.value,
+      text: text,
       time: zeroPad(date.getHours()) + ':' + zeroPad(date.getMinutes())
     };
   }
@@ -202,6 +204,13 @@
    * @type {HTMLFormElement}
    */
   var form = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#form');
+
+  var field = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#field');
+
+  field.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') sendHandler(event);
+    return;
+  });
 
   form.addEventListener('submit', sendHandler);
 

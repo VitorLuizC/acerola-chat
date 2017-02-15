@@ -25,7 +25,9 @@ const field = getElement('#field');
  */
 function getMessage() {
   let date = new Date();
+  let text = field.value;
 
+  field.value = '';
   /**
    * Put a zero if number lower than 10. Ex. 09, 02.
    * @param {number} num
@@ -34,7 +36,7 @@ function getMessage() {
   const zeroPad = num => num <= 9 ? '0' + num.toString() : num.toString();
 
   return {
-    text: field.value,
+    text,
     time: `${zeroPad(date.getHours())}:${zeroPad(date.getMinutes())}`
   };
 }

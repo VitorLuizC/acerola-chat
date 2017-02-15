@@ -10,6 +10,14 @@ const socket = io();
  */
 const form = getElement('#form');
 
+const field = getElement('#field');
+
+field.addEventListener('keydown', event => {
+  if (event.key === 'Enter')
+    sendHandler(event);
+  return;
+});
+
 form.addEventListener('submit', sendHandler);
 
 socket.on('chat message', receiveHandler);
