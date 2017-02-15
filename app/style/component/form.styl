@@ -1,0 +1,35 @@
+position-footer()
+  position: absolute
+  bottom: 0
+  right: 0
+  left: @right
+
+.form
+  position-footer()
+  overflow: auto
+  box-sizing: border-box
+  width: 100%
+  padding-right: 2.5%
+  padding-left: @padding-right
+  border-top: 1px solid $form-color
+
+  +above(540px)
+    padding-right: 5%
+    padding-left: @padding-right
+
+  > .message
+    float: left
+    width: 75%
+    height: 50px
+    resize: none
+
+    +above(540px)
+      width: 80%
+
+  > .send
+    height: 50px
+    width: 25%
+    cursor: pointer
+
+    +above(540px)
+      width: 20%

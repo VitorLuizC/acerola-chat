@@ -138,7 +138,7 @@
    * Message field.
    * @type {HTMLTextAreaElement}
    */
-  var field = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__html_js__["a" /* getElement */])('#field');
+  var field = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__html_js__["a" /* getElement */])('.message');
 
   /**
    * @typedef Message
@@ -183,7 +183,15 @@
     list.appendChild(item);
   }
 
-  /* harmony default export */__webpack_exports__["a"] = { getMessage: getMessage, renderMessage: renderMessage };
+  /**
+   * Remove first message.
+   */
+  function removeFirst() {
+    var item = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__html_js__["a" /* getElement */])('li:first-child', list);
+    list.removeChild(item);
+  }
+
+  /* harmony default export */__webpack_exports__["a"] = { getMessage: getMessage, renderMessage: renderMessage, removeFirst: removeFirst };
 
   /***/
 },
@@ -203,18 +211,23 @@
    * Message form.
    * @type {HTMLFormElement}
    */
-  var form = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#form');
+  var form = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('.form');
 
-  var field = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#field');
+  var field = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('.message');
 
   field.addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') sendHandler(event);
+    if (event.key === 'Enter' && !event.shiftKey) sendHandler(event);
     return;
   });
 
   form.addEventListener('submit', sendHandler);
-
-  socket.on('chat message', receiveHandler);
+  socket.on('chat message', function (message) {
+    return __WEBPACK_IMPORTED_MODULE_1__lib_chat_js__["a" /* default */].renderMessage(message);
+  });
+  socket.on('load messages', loadHandler);
+  socket.on('timeout message', function () {
+    return __WEBPACK_IMPORTED_MODULE_1__lib_chat_js__["a" /* default */].removeFirst();
+  });
 
   /**
    * @typedef Message
@@ -224,11 +237,12 @@
    */
 
   /**
-   * On receive message callback.
-   * @param {Message} message
+   * @param {Array.<Message>} messages
    */
-  function receiveHandler(message) {
-    __WEBPACK_IMPORTED_MODULE_1__lib_chat_js__["a" /* default */].renderMessage(message);
+  function loadHandler(messages) {
+    messages.forEach(function (message) {
+      __WEBPACK_IMPORTED_MODULE_1__lib_chat_js__["a" /* default */].renderMessage(message);
+    });
   }
 
   /**
@@ -244,7 +258,7 @@
 
     if (isValidMessage) socket.emit('chat message', message);
     return false;
-  };
+  }
 
   /***/
 }]);

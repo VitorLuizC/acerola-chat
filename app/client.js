@@ -8,19 +8,20 @@ const socket = io();
  * Message form.
  * @type {HTMLFormElement}
  */
-const form = getElement('#form');
+const form = getElement('.form');
 
-const field = getElement('#field');
+const field = getElement('.message');
 
 field.addEventListener('keydown', event => {
-  if (event.key === 'Enter')
+  if (event.key === 'Enter' && !event.shiftKey)
     sendHandler(event);
   return;
 });
 
 form.addEventListener('submit', sendHandler);
-
-socket.on('chat message', receiveHandler);
+socket.on('chat message', message => chat.renderMessage(message));
+socket.on('load messages', loadHandler);
+socket.on('timeout message', () => chat.removeFirst());
 
 /**
  * @typedef Message
@@ -30,11 +31,12 @@ socket.on('chat message', receiveHandler);
  */
 
 /**
- * On receive message callback.
- * @param {Message} message
+ * @param {Array.<Message>} messages
  */
-function receiveHandler(message) {
-  chat.renderMessage(message);
+function loadHandler(messages) {
+  messages.forEach(message => {
+    chat.renderMessage(message);
+  });
 }
 
 /**
@@ -51,4 +53,4 @@ function sendHandler(event) {
   if (isValidMessage)
     socket.emit('chat message', message);
   return false;
-};
+}

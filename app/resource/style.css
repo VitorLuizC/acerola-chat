@@ -6,18 +6,84 @@ html {
   font-size: 62.5%;
 }
 body,
-textarea {
+textarea,
+button,
+input[type=\"text\"] {
   font-size: 1.6rem;
   font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #fff;
 }
 body,
 ul,
-h1 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
+textarea,
+button,
+input[type=\"text\"] {
+  box-sizing: border-box;
+  padding: 0;
+  border: 0 none transparent;
+  background-color: transparent;
+  background-image: none;
+}
+textarea:focus,
+button:focus,
+input[type=\"text\"]:focus {
+  outline: 0 none transparent;
+}
+.chat {
+  margin-bottom: 51px;
+}
 .container {
-  background-color: #fc4112;
-  background-image: linear-gradient(transparent, #fe743d);
+  background-color: #da0007;
+  background-image: linear-gradient(transparent, #e61824);
+}
+.form {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: auto;
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: 2.5%;
+  padding-left: 2.5%;
+  border-top: 1px solid #fff;
+}
+@media only screen and (min-width: 540px) {
+  .form {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+}
+.form > .message {
+  float: left;
+  width: 75%;
+  height: 50px;
+  resize: none;
+}
+@media only screen and (min-width: 540px) {
+  .form > .message {
+    width: 80%;
+  }
+}
+.form > .send {
+  height: 50px;
+  width: 25%;
+  cursor: pointer;
+}
+@media only screen and (min-width: 540px) {
+  .form > .send {
+    width: 20%;
+  }
 }
 .header {
   border-bottom: 1px solid #fff;

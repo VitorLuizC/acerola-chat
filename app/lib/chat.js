@@ -10,7 +10,7 @@ const list = getElement('#list');
  * Message field.
  * @type {HTMLTextAreaElement}
  */
-const field = getElement('#field');
+const field = getElement('.message');
 
 /**
  * @typedef Message
@@ -56,4 +56,12 @@ function renderMessage(message) {
   list.appendChild(item);
 }
 
-export default { getMessage, renderMessage };
+/**
+ * Remove first message.
+ */
+function removeFirst() {
+  let item = getElement('li:first-child', list);
+  list.removeChild(item);
+}
+
+export default { getMessage, renderMessage, removeFirst };
