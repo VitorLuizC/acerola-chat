@@ -6,9 +6,9 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     title!=title
     link(rel="stylesheet", href="/resource/style.css")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto:100,400")
   body.container
-    header
-      h1!=title
+    include header
     block content
     footer
     script(src="/socket.io/socket.io.js")

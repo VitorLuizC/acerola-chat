@@ -8,7 +8,7 @@ html {
 body,
 textarea {
   font-size: 1.6rem;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 body,
 ul,
@@ -18,4 +18,20 @@ h1 {
 .container {
   background-color: #fc4112;
   background-image: linear-gradient(transparent, #fe743d);
+}
+.header {
+  border-bottom: 1px solid #fff;
+}
+.header > .title {
+  font-size: 3em;
+  font-weight: 100;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 0 5px rgba(0,0,0,0.75);
+}
+@media only screen and (min-width: 540px) {
+  .header > .title {
+    font-size: 4em;
+    text-shadow: 0 0 10px rgba(0,0,0,0.75);
+  }
 }
