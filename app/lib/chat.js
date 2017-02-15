@@ -55,5 +55,10 @@ function renderMessage(message) {
 
   list.appendChild(item);
 }
-
-export default { getMessage, renderMessage };
+function renderUser(user){
+   let users = document.createElement('li');
+   users.innerHTML = `
+   <p>${users}</p>
+   `;
+}
+export default { getMessage, renderMessage, renderUser };

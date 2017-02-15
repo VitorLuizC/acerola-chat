@@ -2,8 +2,15 @@ extend base/layout.pug
 
 block content
   .chat
+    .list_user
+      ul#lst_user
     .chat__messages
       ul#list.chat__messages-list
     form#form.chat__messages-form
+      input#user(type="text", value="Anonymous")
+      br
       textarea#field(placeholder="...")
       button#send(type="submit") Enviar
+
+
+

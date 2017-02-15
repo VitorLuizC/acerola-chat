@@ -11,6 +11,7 @@ const socket = io();
 const form = getElement('#form');
 
 const field = getElement('#field');
+const user = getElement("#user");
 
 field.addEventListener('keydown', event => {
   if (event.key === 'Enter')
@@ -19,7 +20,7 @@ field.addEventListener('keydown', event => {
 });
 
 form.addEventListener('submit', sendHandler);
-
+socket.on('load users', users => users.forEach(user => chat.renderUser(user)));
 socket.on('chat message', receiveHandler);
 
 /**

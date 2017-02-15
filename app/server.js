@@ -8,6 +8,8 @@ const app = express();
 const server = http.createServer(app);
 const io = socket(server);
 
+const users = [];
+
 app
   .set('view engine', 'pug')
   .set('views', join(__dirname, './view'))
@@ -15,6 +17,7 @@ app
   .get('/', (req, res) => res.render('main', config.view));
 
 io.on('connection', socket => {
+  socket.emit('load users', users);
   socket.on('chat message', message => io.emit('chat message', message))
 });
 

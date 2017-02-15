@@ -182,8 +182,11 @@
 
     list.appendChild(item);
   }
-
-  /* harmony default export */__webpack_exports__["a"] = { getMessage: getMessage, renderMessage: renderMessage };
+  function renderUser(user) {
+    var users = document.createElement('li');
+    users.innerHTML = '\n   <p>' + users + '</p>\n   ';
+  }
+  /* harmony default export */__webpack_exports__["a"] = { getMessage: getMessage, renderMessage: renderMessage, renderUser: renderUser };
 
   /***/
 },
@@ -206,6 +209,7 @@
   var form = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#form');
 
   var field = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#field');
+  var user = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])("#user");
 
   field.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') sendHandler(event);
@@ -213,7 +217,11 @@
   });
 
   form.addEventListener('submit', sendHandler);
-
+  socket.on('load users', function (users) {
+    return users.forEach(function (user) {
+      return __WEBPACK_IMPORTED_MODULE_1__lib_chat_js__["a" /* default */].renderUser(user);
+    });
+  });
   socket.on('chat message', receiveHandler);
 
   /**
