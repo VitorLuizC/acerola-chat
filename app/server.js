@@ -14,6 +14,6 @@ app
   .use('/resource', express.static(join(__dirname, './resource')))
   .get('/', (req, res) => res.render('main', config.view));
 
-io.on('connection', (user) => console.log('User was connected!'));
+io.on('send', message => console.log(message)) //socket('receive', message));
 
 server.listen(config.server.port, config.server.log);

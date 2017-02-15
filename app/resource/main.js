@@ -91,6 +91,9 @@
     return getElement;
   });
   /* unused harmony export getElements */
+  /* harmony export (binding) */__webpack_require__.d(__webpack_exports__, "b", function () {
+    return dismissDefault;
+  });
   /**
    * Get an element by CSS selector.
    * @param {string} selector
@@ -101,7 +104,7 @@
     var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
 
     var element = parent.querySelector(selector);
-    if (element) throw new Error('Element "' + selector + '" not found.');
+    if (!element) throw new Error('Element "' + selector + '" not found.');
     return element;
   }
 
@@ -119,6 +122,25 @@
     return Array.from(elements);
   }
 
+  /**
+   * Returns a nice event handler.
+   * @param {Function} callback
+   */
+  function dismissDefault(callback) {
+    /**
+     * Event handler. Could dismiss default action.
+     * @param {Event} event
+     */
+    function handler(event) {
+      var value = callback.apply(this, event);
+      event.preventDefault();
+      event.stopPropagation();
+      return value;
+    }
+
+    return handler;
+  }
+
   /***/
 },
 /* 1 */
@@ -129,7 +151,53 @@
   Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_html_js__ = __webpack_require__(0);
 
-  var chat = __WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */]('#chat');
+  /**
+   * Global socket client instance.
+   */
+  var socket = io();
+
+  var list = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#list');
+  var send = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#send');
+  var text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["a" /* getElement */])('#text');
+
+  send.addEventListener('click', __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_html_js__["b" /* dismissDefault */])(function () {
+    socket.emit('send', createMessage());
+  }));
+
+  socket.on('receive', function (message) {
+    list.appendChild(createItem(message));
+  });
+
+  /**
+   * @typedef Message
+   * @type {Object}
+   * @property {string} text
+   * @property {string} time
+   */
+
+  /**
+   * @returns {Message}
+   */
+  function createMessage() {
+    var date = new Date();
+
+    return {
+      text: text.value,
+      time: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+    };
+  }
+
+  /**
+   * @param {Message} message
+   * @returns {HTMLLIElement}
+   */
+  function createItem(message) {
+    var item = document.createElement('li');
+
+    item.innerHTML = '\n    <p>' + message.text + '</p>\n    <small>' + message.time + '</small>\n  ';
+
+    return item;
+  }
 
   /***/
 }]);

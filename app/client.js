@@ -1,20 +1,19 @@
-import { getElement, handleEvent } from './lib/html.js';
+import { getElement, dismissDefault } from './lib/html.js';
 
 /**
  * Global socket client instance.
  */
 const socket = io();
 
-
 const list = getElement('#list');
-const form = getElement('#form');
+const send = getElement('#send');
 const text = getElement('#text');
 
-form.addEventListener('submit', handleEvent(() => {
-  io.emit('send', createMessage());
+send.addEventListener('click', dismissDefault(() => {
+  socket.emit('send', createMessage());
 }));
 
-io.on('receive', message => {
+socket.on('receive', message => {
   list.appendChild(createItem(message));
 });
 
@@ -32,7 +31,7 @@ function createMessage() {
   let date = new Date();
 
   return {
-    text: text.value(),
+    text: text.value,
     time: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   };
 }

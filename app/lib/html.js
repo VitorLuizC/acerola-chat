@@ -6,7 +6,7 @@
  */
 function getElement(selector, parent = document) {
   let element = parent.querySelector(selector);
-  if (element)
+  if (!element)
     throw new Error(`Element "${selector}" not found.`);
   return element;
 }
@@ -27,25 +27,20 @@ function getElements(selectors, parent = document) {
 /**
  * Returns a nice event handler.
  * @param {Function} callback
- * @param {boolean} [dismissDefault]
  */
-function handleEvent(callback, dismissDefault = true) {
+function dismissDefault(callback) {
   /**
    * Event handler. Could dismiss default action.
    * @param {Event} event
    */
   function handler(event) {
     let value = callback.apply(this, event);
-
-    if (dismissDefault) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
+    event.preventDefault();
+    event.stopPropagation();
     return value;
   }
 
   return handler;
 }
 
-export { getElement, getElements, handleEvent };
+export { getElement, getElements, dismissDefault };
