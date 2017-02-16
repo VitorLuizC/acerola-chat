@@ -1,5 +1,5 @@
 {
-  "name": "chat",
+  "name": "acerola-chat",
   "version": "1.0.0",
   "description": "Global and private chats without any registering.",
   "main": "./app/server.js",

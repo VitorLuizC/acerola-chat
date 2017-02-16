@@ -1,4 +1,4 @@
-# Chat
+# Acerola &bull; Chat
 Global and private chats without any registering.
 
 ## Tech Stack
