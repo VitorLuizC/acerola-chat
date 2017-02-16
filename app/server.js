@@ -15,7 +15,7 @@ function removeItem(item, list) {
   let index = list.indexOf(item);
   if (index === -1)
     throw new Error('Item not found in list.');
-  list.slice(index, 1);
+  list.splice(index, 1);
 }
 
 /**
