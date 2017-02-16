@@ -10,7 +10,7 @@ const socket = io();
  */
 const form = getElement('.form');
 
-const field = getElement('.message');
+const field = getElement('.form > .message');
 
 field.addEventListener('keydown', event => {
   if (event.key === 'Enter' && !event.shiftKey)
@@ -19,9 +19,10 @@ field.addEventListener('keydown', event => {
 });
 
 form.addEventListener('submit', sendHandler);
-socket.on('chat message', message => chat.renderMessage(message));
-socket.on('load messages', loadHandler);
-socket.on('timeout message', () => chat.removeFirst());
+socket.on('chat message', message => {
+  chat.renderMessage(message);
+  setTimeout(chat.removeFirst, 30 * 1000);
+});
 
 /**
  * @typedef Message
@@ -29,15 +30,6 @@ socket.on('timeout message', () => chat.removeFirst());
  * @property {string} text
  * @property {string} time
  */
-
-/**
- * @param {Array.<Message>} messages
- */
-function loadHandler(messages) {
-  messages.forEach(message => {
-    chat.renderMessage(message);
-  });
-}
 
 /**
  * On send message callback.

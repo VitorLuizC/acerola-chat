@@ -1,22 +1,24 @@
+import marked from 'marked';
 import { getElement } from './html.js';
 
 /**
  * Messages list.
  * @type {HTMLUListElement}
  */
-const list = getElement('#list');
+const list = getElement('.chat > .messages');
 
 /**
  * Message field.
  * @type {HTMLTextAreaElement}
  */
-const field = getElement('.message');
+const field = getElement('.form > .message');
 
 /**
  * @typedef Message
  * @type {Object}
  * @property {string} text
  * @property {string} time
+ * @property {number} left
  */
 
 /**
@@ -25,9 +27,9 @@ const field = getElement('.message');
  */
 function getMessage() {
   let date = new Date();
-  let text = field.value;
+  let text = field.textContent;
 
-  field.value = '';
+  field.textContent = '';
   /**
    * Put a zero if number lower than 10. Ex. 09, 02.
    * @param {number} num
@@ -48,9 +50,12 @@ function getMessage() {
 function renderMessage(message) {
   let item = document.createElement('li');
 
+  item.classList.add('message');
+  item.title = message.time;
+
   item.innerHTML = `
-    <p>${message.text}</p>
-    <small>${message.time}</small>
+    <small class="time">${message.time}</small>
+    ${marked.parse(message.text)}
   `;
 
   list.appendChild(item);

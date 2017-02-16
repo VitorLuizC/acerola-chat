@@ -1,2 +1,56 @@
 .chat
-  margin-bottom: 51px
+  box-sizing: border-box
+  overflow-y: auto
+  overflow-x: hidden
+  height: calc(100% - (73px + 51px))
+
+  +above(540px)
+    height: calc(100% - (96px + 51px))
+
+  > .messages
+    overflow: scroll hidden
+    list-style: none
+    display: flex
+    flex-direction: column
+    padding: 6px
+
+    +above(540px)
+      padding: 6px 12px
+
+    > .message
+      display: inline-block
+      margin: 6px
+      padding: 3px 12px
+      color: #333
+      background-color: #fff
+      border-radius: 12px
+      animation: vanish 31s
+
+      +above(540px)
+        margin: 12px
+
+      > .text
+        display: inline-block
+
+      > .time
+        font-size: .7em
+
+
+@keyframes vanish
+  0%
+    transform: scale(1)
+  1%
+    transform: scale(1.3)
+  2%
+    transform: scale(.9)
+  3%
+    transform: scale(1.1)
+  4%
+    transform: scale(1)
+  80%
+    opacity: 1
+  95%
+    transform: translateX(0)
+  100%
+    transform: translateX(-100%)
+    opacity: 0

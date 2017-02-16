@@ -6,12 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node .",
-    "build:script:webpack": "webpack ./app/client.js ./app/resource/main.js",
-    "build:script:babel": "babel ./app/resource/main.js --presets es2015 -o ./app/resource/main.js",
+    "build:script:webpack": "webpack ./app/client.js ./app/resource/main.bundle.js",
+    "build:script:babel": "babel ./app/resource/main.bundle.js --presets es2015 -o ./app/resource/main.js",
     "build:stylus": "stylus ./app/style/index.styl -o ./app/resource/style.css",
     "build:script": "npm run build:script:webpack && npm run build:script:babel",
     "build": "npm run build:stylus && npm run build:script",
-    "watch:stylus": "stylus ./app/style/index.styl -o ./app/resource/style.css -w"
+    "watch:script:webpack": "webpack ./app/client.js ./app/resource/main.bundle.js -w --devtool inline-source-map",
+    "watch:script:babel": "babel ./app/resource/main.bundle.js --presets es2015 -o ./app/resource/main.js -w",
+    "watch:stylus": "stylus ./app/style/index.styl -o ./app/resource/style.css -w",
+    "watch": "concurrently \"npm run watch:script:babel\" \"npm run watch:stylus\" \"npm run watch:script:webpack\""
   },
   "repository": {
     "type": "git",
@@ -29,6 +32,7 @@
   "homepage": "https://github.com/VitorLuizC/chat#readme",
   "dependencies": {
     "express": "^4.14.1",
+    "marked": "^0.3.6",
     "pug": "^2.0.0-beta11",
     "rupture": "^0.6.2",
     "socket.io": "^1.7.2"
@@ -39,6 +43,7 @@
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
+    "concurrently": "^3.3.0",
     "stylus": "^0.54.5",
     "webpack": "^2.2.1"
   }

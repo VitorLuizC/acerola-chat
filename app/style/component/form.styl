@@ -18,13 +18,21 @@ position-footer()
     padding-left: @padding-right
 
   > .message
+    position: relative
     float: left
-    width: 75%
-    height: 50px
-    resize: none
+    min-width: 75%
+    min-height: 50px
+
+    &::before
+      position: absolute
+      content: '...'
+
+    &:hover
+      &::before
+        content: none
 
     +above(540px)
-      width: 80%
+      min-width: 80%
 
   > .send
     height: 50px

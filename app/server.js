@@ -2,11 +2,6 @@ const config = require('./config/');
 const { app, server, io } = require('./lib/server.js');
 
 /**
- * Messages cache.
- */
-const messages = [];
-
-/**
  * Remove item from list and return it.
  * @param {any} item
  * @param {Array.<any>} list
@@ -26,18 +21,7 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', socket => {
-  socket.emit('load messages', messages);
-
-  socket.on('chat message', message => {
-    messages.push(message);
-
-    setTimeout(() => {
-      removeItem(message, messages);
-      socket.emit('timeout message', message);
-    }, 30 * 1000);
-
-    io.emit('chat message', message);
-  });
+  socket.on('chat message', message => io.emit('chat message', message));
 });
 
 server.listen(config.server.port, config.server.log);

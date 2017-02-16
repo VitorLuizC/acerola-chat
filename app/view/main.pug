@@ -2,13 +2,8 @@ extend base/layout.pug
 
 block content
   .chat
-    .chat__messages
-      ul#list.chat__messages-list
-    //- form#form.chat__messages-form
-    //-   textarea#field.field(placeholder="...", rows="2")
-    //-   button#send.button(type="submit") Enviar
-
+    ul.messages
 
   form.form
-    textarea.message(rows="2", placeholder="Message ...")
+    p.message(contenteditable="true")
     button.send(type="submit") Send
